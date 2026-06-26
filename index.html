@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Shuzheng Xie - WSU Everett Faculty Profile</title>
+    
+    <!-- Google Fonts: Lora (Academic Serif) & Plus Jakarta Sans (Modern Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- WSU Brand Colors & Glassmorphism Variables --- */
+        :root {
+            --wsu-crimson: #a30f32;
+            --wsu-crimson-light: #c61d41;
+            --wsu-gray: #53565a;
+            --wsu-gray-dark: #3a3c3f;
+            --text-main: #111827; /* Darkened for higher contrast */
+            --text-muted: #374151; /* Darkened for higher contrast */
+            --white: #ffffff;
+            
+            /* Glassmorphism Tokens - Decreased white opacity for more blur effect */
+            --glass-bg: rgba(255, 255, 255, 0.70);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-card: rgba(255, 255, 255, 0.55);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-heading: 'Lora', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        /* --- Global Styles --- */
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            
+            /* WSU Everett Background Image: Balanced overlay */
+            background-color: #f0f2f5;
+            background-image: 
+                linear-gradient(rgba(240, 242, 245, 0.6), rgba(240, 242, 245, 0.7)),
+                url('everett.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* --- Header / Hero --- */
+        header {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            padding: 3.5rem 1rem 3rem; /* Adjusted top padding to accommodate the logo */
+            border-bottom: 5px solid var(--wsu-crimson);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wsu-logo {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto 2rem auto;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 24px rgba(163, 15, 50, 0.15);
+            margin: 0 auto 1.5rem auto;
+            display: block;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(163, 15, 50, 0.25);
+            border-color: var(--white);
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            color: var(--wsu-crimson);
+            margin: 0 0 0.5rem 0;
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            margin: 0.25rem 0;
+            font-size: 1.15rem;
+            font-weight: 500;
+        }
+
+        /* --- Sticky Main Navigation --- */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(83, 86, 90, 0.85); /* Translucent WSU Gray */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            position: relative;
+            display: block;
+            padding: 1.25rem 1rem; /* Reduced horizontal padding from 1.75rem */
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px; /* Slightly tighter letter spacing */
+            font-size: 0.8rem; /* Slightly smaller text to fit single line */
+            transition: var(--transition);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: var(--wsu-crimson-light);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(58, 60, 63, 0.9);
+            color: var(--white);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* --- Main Content Layout --- */
+        main {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 3.5rem;
+            margin-bottom: 3.5rem;
+            border-radius: 16px;
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.1);
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            color: var(--wsu-crimson);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+            margin-top: 0;
+            font-size: 2.25rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--wsu-crimson);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-family: var(--font-heading);
+            color: var(--wsu-gray-dark);
+            margin-top: 2rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* --- Article Grids (Flexbox) --- */
+        .article-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .article-grid article {
+            flex: 1 1 calc(50% - 2rem);
+            background: var(--glass-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .article-grid article:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.08);
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .article-grid article h3 {
+            margin-top: 0;
+            color: var(--wsu-crimson);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        /* --- Personal Life Photo Grid --- */
+        .personal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .personal-img-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            aspect-ratio: 4 / 3; /* Keeps all images uniform */
+            position: relative;
+            background-color: var(--wsu-gray); /* Fallback color */
+        }
+
+        .personal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Filter: Grayscale for academic tone, slight brightness adjustment */
+            filter: grayscale(85%) sepia(10%);
+            transform: scale(1.02); /* Slight baseline scale to hide edges on animation */
+            transition: filter 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block; 
+        }
+
+        .personal-img-container:hover .personal-img {
+            /* Full color bloom and scale on hover */
+            filter: grayscale(0%) sepia(0%);
+            transform: scale(1.1);
+        }
+
+        /* --- Typography & Lists --- */
+        ul {
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+        }
+
+        li::marker {
+            color: var(--wsu-crimson);
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: var(--wsu-crimson);
+            background-color: rgba(163, 15, 50, 0.05);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            border: 1px solid rgba(163, 15, 50, 0.1);
+        }
+
+        /* --- Link & Publication Styles --- */
+        .scholar-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--wsu-crimson);
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+
+        .scholar-link:hover {
+            border-bottom-color: var(--wsu-crimson);
+            color: var(--wsu-crimson-light);
+        }
+
+        .publications-list li {
+            margin-bottom: 1.2rem;
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            background-color: var(--wsu-gray-dark);
+            color: var(--white);
+            padding: 4rem 1rem;
+            text-align: center;
+            margin-top: 6rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--wsu-crimson) 0%, var(--wsu-crimson-light) 100%);
+        }
+
+        footer h2 {
+            font-family: var(--font-heading);
+            color: var(--white);
+            border-bottom: none;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+            display: flex;
+        }
+        
+        footer h2::after {
+            display: none;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+            color: #d1d5db;
+        }
+
+        footer a {
+            color: #ffcccc;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: var(--white);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* --- Scroll Animation Classes --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .article-grid article {
+                flex: 1 1 100%;
+            }
+            header h1 {
+                font-size: 2.25rem;
+            }
+            section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER: Professional Identity & Navigation -->
+    <header>
+        <!-- Added WSU Logo -->
+        <img src="WSU-lockup-horz-4c_t.png" alt="Washington State University" class="wsu-logo">
+        
+        <img src="headshot.jpg" alt="Dr. Shuzheng Xie Headshot" class="profile-photo" onerror="this.src='https://ui-avatars.com/api/?name=Shuzheng+Xie&background=a30f32&color=fff&size=160'; this.onerror=null;">
+        <h1>Shuzheng Xie, Ph.D.</h1>
+        <p>Scholarly Assistant Professor, School of Electrical Engineering and Computer Science</p>
+        <p>Washington State University Everett</p>
+        
+        <nav aria-label="Main Navigation">
+            <ul>
+                <li><a href="#biography">Biography</a></li>
+                <li><a href="#teaching-philosophy">Teaching Philosophy</a></li>
+                <li><a href="#research">Research Focus</a></li>
+                <li><a href="#awards">Awards</a></li>
+                <li><a href="#leadership">Leadership & Service</a></li>
+                <!-- Newly added link for the personal section -->
+                <li><a href="#personal">Beyond the Classroom</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- SECTION 1: Biography -->
+        <section id="biography" class="reveal">
+            <h2>Biography</h2>
+            <p>Welcome. I am a Scholarly Assistant Professor at the School of Electrical Engineering and Computer Science at Washington State University Everett. My primary dedication is to undergraduate education within the Bachelor of Science in Electrical Engineering (BSEE) program.</p>
+            <p>I earned my Ph.D. in Electrical Engineering from Washington State University in Pullman, WA, where my dissertation focused on atmospheric pressure cold plasma processing. Prior to that, I received my B.E. in Nuclear Engineering from North China Electric Power University in Beijing. As an educator, my goal is to equip the next generation of engineers with both the rigorous theoretical foundation and the practical, real-world skills necessary to thrive in modern industry.</p>
+        </section>
+
+        <!-- SECTION 2: Teaching Philosophy -->
+        <section id="teaching-philosophy" class="reveal">
+            <h2>Teaching Philosophy: Engineering Beyond the Textbook</h2>
+            <p>My teaching methodology revolves around moving past textbook abstraction. Engineering is inherently applied, and my classrooms reflect that reality through historical context, hands-on laboratories, and direct industry integration.</p>
+            
+            <div class="article-grid">
+                <article id="industry-connection" class="reveal">
+                    <h3>Bridging Theory and Industry Practice</h3>
+                    <p>I integrate methods connecting engineering education directly to real-world problem-solving. By regularly inviting engineering professionals into my classes for tech talks, mentorship panels, and site tours, students gain invaluable perspective on how the equations they learn solve actual problems in the workforce.</p>
+                </article>
+
+                <article id="historical-context" class="reveal">
+                    <h3>Contextualizing Complexity</h3>
+                    <p>Complex theories can often feel disconnected from reality. I utilize historical anecdotes to demystify advanced concepts—such as explaining the development of Laplace transforms in Circuits II or the origins of Fourier analysis in Signals and Systems. Showing the human element and the original problems these engineers were trying to solve makes the mathematics intuitive and approachable.</p>
+                </article>
+            </div>
+
+            <h3 class="reveal">Current Course & Laboratory Offerings</h3>
+            <p class="reveal">I am responsible for teaching core 300-level courses and managing laboratory operations (electric circuits, power, and computer labs) at WSU Everett:</p>
+            <ul class="reveal">
+                <li><span class="highlight">EE 321:</span> Electric Circuits II (Laplace domain analysis, analogue filter designs)</li>
+                <li><span class="highlight">EE 331:</span> Electromagnetic Fields and Waves (Static fields)</li>
+                <li><span class="highlight">EE 341:</span> Systems and Signals (Fourier transform, continuous and discrete analysis)</li>
+                <li><span class="highlight">EE 361:</span> Electrical Power Systems (Three-phase AC, transformers, rotating machines)</li>
+                <li><span class="highlight">EE 352 & EE 362:</span> Electrical Engineering Laboratory I & Power System Laboratory I</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 3: Research Focus -->
+        <section id="research" class="reveal">
+            <h2>Research Focus: Atmospheric Pressure Cold Plasma</h2>
+            <p>While my primary focus is instruction, I maintain an active involvement in research, particularly in atmospheric pressure cold plasma material processing, and I am deeply committed to student research mentorship.</p>
+            
+            <div class="article-grid">
+                <article id="plasma-processing" class="reveal">
+                    <h3>Material Processing</h3>
+                    <p>My academic research focuses on atmospheric pressure cold plasma processing of biochar and the inactivation of bacteria. I have investigated various plasma admixtures and generated reactive oxygen and nitrogen species (RONS) in scalable corona discharge reactors for varied processing applications.</p>
+                </article>
+
+                <article id="student-research-mentorship" class="reveal">
+                    <h3>Student Mentorship</h3>
+                    <p>I actively co-advise Electrophysics major Ph.D. students in projects such as Schlieren-based investigations of Helium flow through pervious metal electrodes. I also guide undergraduate research, including recent projects comparing various Printed Circuit Board (PCB) fabrication methods.</p>
+                </article>
+            </div>
+
+            <div class="reveal" style="margin-top: 3rem;">
+                <h3>Selected Publications</h3>
+                <ul class="publications-list">
+                    <li>Elvis Haisa, Shuzheng Xie, and Patrick Pedrow. "Schlieren-based Investigation of Helium Flow Through a Pervious Metal Electrode", <em>Journal of Flow Visualization and Image Processing</em>, 2026.</li>
+                    <li>Elvis Haisa, Shuzheng Xie, and Patrick Pedrow. "Schlieren Imaging to Evaluate Inert Gas Flow Through a Stainless-steel Screen Plasma Reactor Electrode Fabricated with a 3D Metal Printer", presented at the <em>77th Annual Gaseous Electronics Conference</em>, San Diego, CA, 2024.</li>
+                    <li>Pedrow, Patrick, Zi Hua, Shuzheng Xie, and Mei-Jun Zhu. "Engineering principles of cold plasma." In <em>Advances in Cold Plasma Applications for Food Safety and Preservation</em>, pp. 3-48. Academic Press, 2020.</li>
+                </ul>
+                <a href="https://scholar.google.com/citations?user=qYL9NOwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="scholar-link">
+                    View my full profile on Google Scholar &rarr;
+                </a>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Awards -->
+        <section id="awards" class="reveal">
+            <h2>Awards & Recognition</h2>
+            <p>I am deeply honored to have my dedication to undergraduate education recognized by the university and my college.</p>
+            
+            <ul class="publications-list">
+                <li><span class="highlight">2026:</span> WSU School of Electrical Engineering and Computer Science Teaching Excellence</li>
+                <li><span class="highlight">2023:</span> Washington State University Everett Chancellor's Award in Teaching Excellence</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 5: Leadership and Service -->
+        <section id="leadership" class="reveal">
+            <h2>Campus Leadership & Community Engagement</h2>
+            <p>Beyond direct work with students, I am actively involved in leadership roles across the university and within professional societies to enhance the holistic academic experience.</p>
+            
+            <ul>
+                <li><span class="highlight">University Leadership:</span> Chair of the WSU Everett Resident Faculty Organization (RFO) and Founder of the WSU Everett Campus Joint Industry Advisory Board.</li>
+                <li><span class="highlight">Professional Societies:</span> Chair of the IEEE Seattle Section Education Society and Chief Advisor for the Tau Beta Pi Everett Chapter.</li>
+                <li><span class="highlight">Student Success:</span> Member of the WSU Everett Student Lifecycle Committee, WSU Academic Integrity Hearing Board, and faculty supporter for the WSU Everett Wind Energy Team.</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 6: Beyond the Classroom (Personal) -->
+        <section id="personal" class="reveal">
+            <h2>Beyond the Classroom</h2>
+            <p>While my professional life is dedicated to engineering education, my time outside the classroom is equally fulfilling. I enjoy exploring the beautiful scenes in the Pacific Northwest region, reading fictions and history books, learning investment, and most importantly, spending quality time with my little boy.</p>
+            
+            <div class="personal-grid">
+                <!-- Family Photo Placeholder -->
+                <div class="personal-img-container">
+                    <img src="family.jpg" alt="Family Photo" class="personal-img">
+                </div>
+                <!-- Outdoor Activities Placeholder -->
+                <div class="personal-img-container">
+                    <img src="outdoor.jpg" alt="Outdoor Activities" class="personal-img">
+                </div>
+                <!-- Cat Photo Placeholder -->
+                <div class="personal-img-container">
+                    <img src="cat.jpg" alt="Cat Photo" class="personal-img">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER: Contact Information -->
+    <footer>
+        <h2>Contact Information</h2>
+        <address>
+            <p>Washington State University Everett</p>
+            <p>915 N Broadway, Room 426<br>Everett, WA 98201</p>
+            <p>Phone: <a href="tel:+14254051665">425-405-1665</a></p>
+            <p>Email: <a href="mailto:shuzheng.xie@wsu.edu">shuzheng.xie@wsu.edu</a></p>
+        </address>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Intersection Observer for Glide & Fade (Reveal) effect
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOptions = {
+                root: null,
+                threshold: 0.05, // Trigger as soon as 5% is visible
+                rootMargin: "0px 0px -20px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Stop observing once revealed
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+
+            // Fallback: forcefully reveal items already in the viewport on load
+            // This fixes issues in iframe previews where the initial scroll event might not fire
+            setTimeout(() => {
+                reveals.forEach(reveal => {
+                    const rect = reveal.getBoundingClientRect();
+                    if (rect.top < window.innerHeight) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }, 150);
+
+            // 2. Smooth Scrolling for Navigation Links
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Calculate offset to account for sticky nav height and add breathing room
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                        const offsetPosition = targetPosition - navHeight - 30;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
