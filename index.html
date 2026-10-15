@@ -32,6 +32,26 @@
             --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         }
 
+        /* Native anchors work with or without JavaScript, including browser history. */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-padding-top: 5.5rem; }
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+        :focus-visible { outline: 3px solid var(--wsu-crimson); outline-offset: 4px; }
+        nav a:focus-visible { outline-color: white; outline-offset: -4px; }
+        .skip-link {
+            position: fixed;
+            top: 0.5rem;
+            left: 0.5rem;
+            z-index: 2000;
+            padding: 0.75rem 1rem;
+            background: white;
+            color: var(--wsu-crimson);
+            transform: translateY(-200%);
+        }
+        .skip-link:focus { transform: none; }
+
         /* --- Global Styles --- */
         body {
             font-family: var(--font-body);
@@ -45,6 +65,9 @@
             background-image: 
                 linear-gradient(rgba(240, 242, 245, 0.6), rgba(240, 242, 245, 0.7)),
                 url('everett.jpg');
+            background-image:
+                linear-gradient(rgba(240, 242, 245, 0.6), rgba(240, 242, 245, 0.7)),
+                image-set(url('everett-1920.webp') type('image/webp'), url('everett.jpg') type('image/jpeg'));
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
@@ -56,7 +79,7 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             text-align: center;
-            padding: 3.5rem 1rem 3rem; /* Adjusted top padding to accommodate the logo */
+            padding: 2.5rem 1rem 2rem;
             border-bottom: 5px solid var(--wsu-crimson);
             position: relative;
             overflow: hidden;
@@ -79,8 +102,8 @@
         }
 
         .profile-photo {
-            width: 160px;
-            height: 160px;
+            width: 168px;
+            height: 168px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid rgba(255, 255, 255, 0.8);
@@ -125,19 +148,31 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        .nav-scroll {
+            max-width: 1100px;
+            margin: auto;
+            overflow-x: auto;
+            overscroll-behavior-x: contain;
+        }
+
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            width: max-content;
+            min-width: 100%;
         }
+
+        nav ul li { margin: 0; }
 
         nav ul li a {
             position: relative;
             display: block;
-            padding: 1.25rem 1rem; /* Reduced horizontal padding from 1.75rem */
+            padding: 1rem;
+            white-space: nowrap;
             color: var(--white);
             text-decoration: none;
             font-weight: 600;
@@ -266,7 +301,7 @@
         /* --- Personal Life Photo Grid --- */
         .personal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -280,6 +315,8 @@
             position: relative;
             background-color: var(--wsu-gray); /* Fallback color */
         }
+
+        .personal-img-container picture { display: block; width: 100%; height: 100%; }
 
         .personal-img {
             width: 100%;
@@ -394,86 +431,120 @@
             text-underline-offset: 4px;
         }
 
-        /* --- Scroll Animation Classes --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Responsive Design --- */
+        /* Content is always visible; no script or scroll observer is required. */
         @media (max-width: 768px) {
-            .article-grid article {
-                flex: 1 1 100%;
+            header { padding: 1.25rem 1rem; }
+            .wsu-logo { max-width: 260px; margin-bottom: 1rem; }
+            .profile-photo { width: 112px; height: 112px; margin-bottom: 0.75rem; }
+            header h1 { font-size: clamp(1.65rem, 7vw, 2.25rem); line-height: 1.3; }
+            header p { font-size: 0.95rem; }
+            nav ul { justify-content: flex-start; }
+            nav ul li a { padding: 0.85rem 0.8rem; font-size: 0.8rem; }
+            main { margin: 1.5rem auto; padding: 0 1rem; }
+            section { padding: 1.25rem; margin-bottom: 1.5rem; }
+            h2 { font-size: clamp(1.5rem, 6vw, 1.85rem); line-height: 1.35; padding-bottom: 0.75rem; }
+            .article-grid { gap: 1rem; margin-top: 1.25rem; }
+            .article-grid article { flex: 1 1 100%; min-width: 0; padding: 1rem; }
+            .article-grid article h3 { font-size: 1.2rem; }
+            .personal-grid { gap: 1rem; }
+            footer { margin-top: 2rem; padding: 2rem 1rem; }
+            body {
+                background-attachment: scroll;
+                background-image:
+                    linear-gradient(rgba(240, 242, 245, 0.6), rgba(240, 242, 245, 0.7)),
+                    image-set(url('everett-960.webp') type('image/webp'), url('everett.jpg') type('image/jpeg'));
             }
-            header h1 {
-                font-size: 2.25rem;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            html { scroll-behavior: auto; }
+            section:hover, .article-grid article:hover, .profile-photo:hover { transform: none; }
+            .personal-img, .personal-img-container:hover .personal-img { transform: none; }
+        }
+        @media print {
+            html { scroll-behavior: auto; scroll-padding-top: 0; }
+            body { background: white; color: black; }
+            .skip-link, nav, .personal-grid { display: none; }
+            header, section, .article-grid article, footer {
+                background: white; color: black; backdrop-filter: none;
+                -webkit-backdrop-filter: none; box-shadow: none;
+                opacity: 1; transform: none !important; animation: none; transition: none;
             }
-            section {
-                padding: 2rem;
-            }
+            header { padding: 0 0 1rem; }
+            .wsu-logo { max-width: 240px; margin-bottom: 0.75rem; }
+            .profile-photo { width: 100px; height: 100px; }
+            main { max-width: none; margin: 1rem 0; padding: 0; }
+            section { padding: 1rem 0; margin: 0; border: 0; }
+            .article-grid { display: block; }
+            .article-grid article { padding: 0; border: 0; }
+            h2, h3 { break-after: avoid; }
+            footer { margin: 1rem 0 0; padding: 1rem 0; }
+            footer h2, footer p, footer a { color: black; }
         }
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <!-- HEADER: Professional Identity & Navigation -->
     <header>
         <!-- Added WSU Logo -->
-        <img src="WSU-lockup-horz-4c_t.png" alt="Washington State University" class="wsu-logo">
+        <img src="WSU-lockup-horz-4c_t.png" alt="Washington State University" class="wsu-logo" width="1280" height="261">
         
-        <img src="headshot.jpg" alt="Dr. Shuzheng Xie Headshot" class="profile-photo" onerror="this.src='https://ui-avatars.com/api/?name=Shuzheng+Xie&background=a30f32&color=fff&size=160'; this.onerror=null;">
+        <picture>
+            <source type="image/webp" srcset="headshot-160.webp 160w, headshot-320.webp 320w" sizes="(max-width: 768px) 112px, 168px">
+            <img src="headshot.jpg" alt="Dr. Shuzheng Xie Headshot" class="profile-photo" width="320" height="400" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
         <h1>Shuzheng Xie, Ph.D.</h1>
         <p>Scholarly Associate Professor, School of Electrical Engineering and Computer Science</p>
         <p>Washington State University Everett</p>
         
-        <nav aria-label="Main Navigation">
-            <ul>
-                <li><a href="#biography">Biography</a></li>
-                <li><a href="#teaching-philosophy">Teaching Philosophy</a></li>
-                <li><a href="#research">Research Focus</a></li>
-                <li><a href="#awards">Awards</a></li>
-                <li><a href="#leadership">Leadership & Service</a></li>
-                <!-- Newly added link for the personal section -->
-                <li><a href="#personal">Beyond the Classroom</a></li>
-            </ul>
-        </nav>
+
     </header>
 
+    <nav aria-label="Main Navigation">
+        <div class="nav-scroll">
+            <ul>
+                <li><a href="#biography">Biography</a></li>
+                <li><a href="#teaching-philosophy">Teaching</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#awards">Awards</a></li>
+                <li><a href="#leadership">Service</a></li>
+                <li><a href="#personal">Personal</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- MAIN CONTENT -->
-    <main>
+    <main id="main-content" tabindex="-1">
 
         <!-- SECTION 1: Biography -->
-        <section id="biography" class="reveal">
+        <section id="biography" tabindex="-1">
             <h2>Biography</h2>
             <p>Welcome. I am a Scholarly Associate Professor at the School of Electrical Engineering and Computer Science at Washington State University Everett. My primary dedication is to undergraduate education within the Bachelor of Science in Electrical Engineering (BSEE) program.</p>
             <p>I earned my Ph.D. in Electrical Engineering from Washington State University in Pullman, WA, where my dissertation focused on atmospheric pressure cold plasma processing. Prior to that, I received my B.E. in Nuclear Engineering from North China Electric Power University in Beijing. As an educator, my goal is to equip the next generation of engineers with both the rigorous theoretical foundation and the practical, real-world skills necessary to thrive in modern industry.</p>
         </section>
 
         <!-- SECTION 2: Teaching Philosophy -->
-        <section id="teaching-philosophy" class="reveal">
+        <section id="teaching-philosophy" tabindex="-1">
             <h2>Teaching Philosophy: Engineering Beyond the Textbook</h2>
             <p>My teaching methodology revolves around moving past textbook abstraction. Engineering is inherently applied, and my classrooms reflect that reality through historical context, hands-on laboratories, and direct industry integration.</p>
             
             <div class="article-grid">
-                <article id="industry-connection" class="reveal">
+                <article id="industry-connection">
                     <h3>Bridging Theory and Industry Practice</h3>
                     <p>I integrate methods connecting engineering education directly to real-world problem-solving. By regularly inviting engineering professionals into my classes for tech talks, mentorship panels, and site tours, students gain invaluable perspective on how the equations they learn solve actual problems in the workforce.</p>
                 </article>
 
-                <article id="historical-context" class="reveal">
+                <article id="historical-context">
                     <h3>Contextualizing Complexity</h3>
                     <p>Complex theories can often feel disconnected from reality. I utilize historical anecdotes to demystify advanced concepts—such as explaining the development of Laplace transforms in Circuits II or the origins of Fourier analysis in Signals and Systems. Showing the human element and the original problems these engineers were trying to solve makes the mathematics intuitive and approachable.</p>
                 </article>
             </div>
 
-            <h3 class="reveal">Current Course & Laboratory Offerings</h3>
-            <p class="reveal">I am responsible for teaching core 300-level courses and managing laboratory operations (electric circuits, power, and computer labs) at WSU Everett:</p>
-            <ul class="reveal">
+            <h3>Current Course & Laboratory Offerings</h3>
+            <p>I am responsible for teaching core 300-level courses and managing laboratory operations (electric circuits, power, and computer labs) at WSU Everett:</p>
+            <ul>
                 <li><span class="highlight">EE 321:</span> Electric Circuits II (Laplace domain analysis, analogue filter designs)</li>
                 <li><span class="highlight">EE 331:</span> Electromagnetic Fields and Waves (Static fields)</li>
                 <li><span class="highlight">EE 341:</span> Systems and Signals (Fourier transform, continuous and discrete analysis)</li>
@@ -483,23 +554,23 @@
         </section>
 
         <!-- SECTION 3: Research Focus -->
-        <section id="research" class="reveal">
+        <section id="research" tabindex="-1">
             <h2>Research Focus: Atmospheric Pressure Cold Plasma</h2>
             <p>While my primary focus is instruction, I maintain an active involvement in research, particularly in atmospheric pressure cold plasma material processing, and I am deeply committed to student research mentorship.</p>
             
             <div class="article-grid">
-                <article id="plasma-processing" class="reveal">
+                <article id="plasma-processing">
                     <h3>Material Processing</h3>
                     <p>My academic research focuses on atmospheric pressure cold plasma processing of biochar and the inactivation of bacteria. I have investigated various plasma admixtures and generated reactive oxygen and nitrogen species (RONS) in scalable corona discharge reactors for varied processing applications.</p>
                 </article>
 
-                <article id="student-research-mentorship" class="reveal">
+                <article id="student-research-mentorship">
                     <h3>Student Mentorship</h3>
                     <p>I actively co-advise Electrophysics major Ph.D. students in projects such as Schlieren-based investigations of Helium flow through pervious metal electrodes. I also guide undergraduate research, including recent projects comparing various Printed Circuit Board (PCB) fabrication methods.</p>
                 </article>
             </div>
 
-            <div class="reveal" style="margin-top: 3rem;">
+            <div style="margin-top: 3rem;">
                 <h3>Selected Publications</h3>
                 <ul class="publications-list">
                     <li>Elvis Haisa, Shuzheng Xie, and Patrick Pedrow. "Schlieren-based Investigation of Helium Flow Through a Pervious Metal Electrode", <em>Journal of Flow Visualization and Image Processing</em>, 2026.</li>
@@ -513,18 +584,19 @@
         </section>
 
         <!-- SECTION 4: Awards -->
-        <section id="awards" class="reveal">
+        <section id="awards" tabindex="-1">
             <h2>Awards & Recognition</h2>
             <p>I am deeply honored to have my dedication to undergraduate education recognized by the university and my college.</p>
             
             <ul class="publications-list">
+                <li><span class="highlight">2026:</span> Huie-Rogers Faculty Research Fellowship</li>
                 <li><span class="highlight">2026:</span> WSU School of Electrical Engineering and Computer Science Teaching Excellence</li>
                 <li><span class="highlight">2023:</span> Washington State University Everett Chancellor's Award in Teaching Excellence</li>
             </ul>
         </section>
 
         <!-- SECTION 5: Leadership and Service -->
-        <section id="leadership" class="reveal">
+        <section id="leadership" tabindex="-1">
             <h2>Campus Leadership & Community Engagement</h2>
             <p>Beyond direct work with students, I am actively involved in leadership roles across the university and within professional societies to enhance the holistic academic experience.</p>
             
@@ -536,22 +608,31 @@
         </section>
 
         <!-- SECTION 6: Beyond the Classroom (Personal) -->
-        <section id="personal" class="reveal">
+        <section id="personal" tabindex="-1">
             <h2>Beyond the Classroom</h2>
             <p>While my professional life is dedicated to engineering education, my time outside the classroom is equally fulfilling. I enjoy exploring the beautiful scenes in the Pacific Northwest region, reading fictions and history books, learning investment, and most importantly, spending quality time with my little boy.</p>
             
             <div class="personal-grid">
                 <!-- Family Photo Placeholder -->
                 <div class="personal-img-container">
-                    <img src="family.jpg" alt="Family Photo" class="personal-img">
+                    <picture>
+                        <source type="image/webp" srcset="family-480.webp 480w, family-960.webp 960w" sizes="(max-width: 600px) calc(100vw - 76px), (max-width: 768px) 45vw, 420px">
+                        <img src="family.jpg" alt="Family Photo" class="personal-img" width="960" height="720" loading="lazy" decoding="async">
+                    </picture>
                 </div>
                 <!-- Outdoor Activities Placeholder -->
                 <div class="personal-img-container">
-                    <img src="outdoor.jpg" alt="Outdoor Activities" class="personal-img">
+                    <picture>
+                        <source type="image/webp" srcset="outdoor-480.webp 480w, outdoor-960.webp 960w" sizes="(max-width: 600px) calc(100vw - 76px), (max-width: 768px) 45vw, 420px">
+                        <img src="outdoor.jpg" alt="Outdoor Activities" class="personal-img" width="960" height="720" loading="lazy" decoding="async">
+                    </picture>
                 </div>
                 <!-- Cat Photo Placeholder -->
                 <div class="personal-img-container">
-                    <img src="cat.jpg" alt="Cat Photo" class="personal-img">
+                    <picture>
+                        <source type="image/webp" srcset="cat-480.webp 480w, cat-960.webp 960w" sizes="(max-width: 600px) calc(100vw - 76px), (max-width: 768px) 45vw, 420px">
+                        <img src="cat.jpg" alt="Cat Photo" class="personal-img" width="960" height="1280" loading="lazy" decoding="async">
+                    </picture>
                 </div>
             </div>
         </section>
@@ -569,66 +650,5 @@
         </address>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Intersection Observer for Glide & Fade (Reveal) effect
-            const reveals = document.querySelectorAll('.reveal');
-
-            const revealOptions = {
-                root: null,
-                threshold: 0.05, // Trigger as soon as 5% is visible
-                rootMargin: "0px 0px -20px 0px"
-            };
-
-            const revealOnScroll = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        // Stop observing once revealed
-                        observer.unobserve(entry.target); 
-                    }
-                });
-            }, revealOptions);
-
-            reveals.forEach(reveal => {
-                revealOnScroll.observe(reveal);
-            });
-
-            // Fallback: forcefully reveal items already in the viewport on load
-            // This fixes issues in iframe previews where the initial scroll event might not fire
-            setTimeout(() => {
-                reveals.forEach(reveal => {
-                    const rect = reveal.getBoundingClientRect();
-                    if (rect.top < window.innerHeight) {
-                        reveal.classList.add('active');
-                    }
-                });
-            }, 150);
-
-            // 2. Smooth Scrolling for Navigation Links
-            const navLinks = document.querySelectorAll('nav a[href^="#"]');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        // Calculate offset to account for sticky nav height and add breathing room
-                        const navHeight = document.querySelector('nav').offsetHeight;
-                        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-                        const offsetPosition = targetPosition - navHeight - 30;
-                        
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
